@@ -1,41 +1,40 @@
 #########################################
-#### ´Ù¶÷Áã¹ö½º ³ë¼±º° Á¤·ùÀå ÀüÃ³¸® ####
-####    ³ë¼±º° Á¤·ùÀå Áöµµ ½Ã°¢È­    ####
+#### ë‹¤ëŒì¥ë²„ìŠ¤ ë…¸ì„ ë³„ ì •ë¥˜ì¥ ì „ì²˜ë¦¬ ####
+####    ë…¸ì„ ë³„ ì •ë¥˜ì¥ ì§€ë„ ì‹œê°í™”    ####
 #########################################
 
-# ³ë¼±º° Á¤·ùÀå Á¤¸®, ³ë¼± Áöµµ½Ã°¢È­, ³ë¼±º° ÀÌ¿ë°´ ÇÃ¶ù
+# ë…¸ì„ ë³„ ì •ë¥˜ì¥ ì •ë¦¬, ë…¸ì„  ì§€ë„ì‹œê°í™”, ë…¸ì„ ë³„ ì´ìš©ê° í”Œë
 
-## µğ·ºÅä¸®¼³Á¤°ú ÆĞÅ°Áö ºÒ·¯¿À±â ÄÚµå´Â »ı·«
+## ë””ë ‰í† ë¦¬ì„¤ì •ê³¼ íŒ¨í‚¤ì§€ ë¶ˆëŸ¬ì˜¤ê¸°
 library(plyr)
 library(ggplot2)
 library(tidyverse)
 library(data.table)
 library(progress)
-setwd("C:/Users/hjh05/Desktop/P-sat/±Í¿©¿î ¼±´ëÆÀ/ÁÖºĞ_´Ù¶÷Áã¹ö½º/daramg/cute_daramg_data")
 
 
-# ´Ù¶÷Áã¹ö½º ³ë¼±º° Á¤·ùÀå Á¤¸® =========================
-## 2020³â 9¿ù µ¥ÀÌÅÍ ÀÌ¿ë
-data=fread("2020³â_¹ö½º³ë¼±º°_Á¤·ùÀåº°_½Ã°£´ëº°_½ÂÇÏÂ÷_ÀÎ¿ø_Á¤º¸(09¿ù).csv", header=T, 
+# ë‹¤ëŒì¥ë²„ìŠ¤ ë…¸ì„ ë³„ ì •ë¥˜ì¥ ì •ë¦¬ =========================
+## 2020ë…„ 9ì›” ë°ì´í„° ì´ìš©
+data=fread("2020ë…„_ë²„ìŠ¤ë…¸ì„ ë³„_ì •ë¥˜ì¥ë³„_ì‹œê°„ëŒ€ë³„_ìŠ¹í•˜ì°¨_ì¸ì›_ì •ë³´(09ì›”).csv", header=T, 
                stringsAsFactors = F,
                data.table = F)
 data=data[,c(1,2,4,5,21,22,23,24,25,26)]
-data %>% colnames #»ç¿ë³â¿ù, ³ë¼±¹øÈ£, Á¤·ùÀåid, Á¤·ùÀåÀÌ¸§, 7~9½ÂÇÏÂ÷½Â°´¼ö
+data %>% colnames #ì‚¬ìš©ë…„ì›”, ë…¸ì„ ë²ˆí˜¸, ì •ë¥˜ì¥id, ì •ë¥˜ì¥ì´ë¦„, 7~9ìŠ¹í•˜ì°¨ìŠ¹ê°ìˆ˜
 
 darams=c("8221","8441", "8552", "8761", "8771", "8551", "8331")
 
 station_ARS=list(NA)
 for (i in 1:7){
-  station_ARS[i] = data %>% filter(³ë¼±¹øÈ£==darams[i]) %>% select(¹ö½ºÁ¤·ùÀåARS¹øÈ£)
+  station_ARS[i] = data %>% filter(ë…¸ì„ ë²ˆí˜¸==darams[i]) %>% select(ë²„ìŠ¤ì •ë¥˜ì¥ARSë²ˆí˜¸)
 }
 names(station_ARS)=darams
 
-station_ARS #³ë¼±º° Á¤·ùÀå ARS¹øÈ£ list
+station_ARS #ë…¸ì„ ë³„ ì •ë¥˜ì¥ ARSë²ˆí˜¸ list
 
 
 
-# ´Ù¶÷Áã¹ö½º Á¤·ùÀå ÁÂÇ¥ Á¤¸® =========================
-station_info = fread("¼­¿ïÆ¯º°½Ã ¹ö½ºÁ¤·ù¼Ò À§Ä¡Á¤º¸.csv", header=T, 
+# ë‹¤ëŒì¥ë²„ìŠ¤ ì •ë¥˜ì¥ ì¢Œí‘œ ì •ë¦¬ =========================
+station_info = fread("ì„œìš¸íŠ¹ë³„ì‹œ ë²„ìŠ¤ì •ë¥˜ì†Œ ìœ„ì¹˜ì •ë³´.csv", header=T, 
                      stringsAsFactors = F,
                      data.table = F)
 station_info = station_info[,c(1,3,4)]
@@ -43,29 +42,29 @@ station_info %>% head
 
 darams
 
-## ver1 : ³ë¼± °¢°¢ÀÇ Á¤·ùÀå À§Ä¡Á¤º¸ df -----------------
+## ver1 : ë…¸ì„  ê°ê°ì˜ ì •ë¥˜ì¥ ìœ„ì¹˜ì •ë³´ df -----------------
 for (i in 1:7){
   df_name = paste0("daram",darams[i])
   df = data.frame(matrix(nrow=length(station_ARS[[i]]),ncol=3))
   for (k in 1:nrow(df)){
-    df[k,]=station_info %>% filter(Á¤·ù¼Ò¹øÈ£==station_ARS[[i]][k])
+    df[k,]=station_info %>% filter(ì •ë¥˜ì†Œë²ˆí˜¸==station_ARS[[i]][k])
   }
   assign(df_name, df)
 }
 
-## ver2 : 7°³ ³ë¼±ÀÇ ¸ğµç Á¤·ùÀåÀ» ÇÏ³ªÀÇ df·Î ÀúÀå------
+## ver2 : 7ê°œ ë…¸ì„ ì˜ ëª¨ë“  ì •ë¥˜ì¥ì„ í•˜ë‚˜ì˜ dfë¡œ ì €ì¥------
 daram_bus = NULL
 for (i in 1:7){
   df = data.frame(matrix(nrow=length(station_ARS[[i]]),ncol=4))
   for (k in seq_along(station_ARS[[i]])){
     df[k,1]=darams[i]
-    df[k,2:4]=station_info %>% filter(Á¤·ù¼Ò¹øÈ£==station_ARS[[i]][k])
+    df[k,2:4]=station_info %>% filter(ì •ë¥˜ì†Œë²ˆí˜¸==station_ARS[[i]][k])
   }
   daram_bus=rbind(daram_bus, df)
 }
 
 
-# Áöµµ½Ã°¢È­ =========================
+# ì§€ë„ì‹œê°í™” =========================
 library(ggplot2)
 library(raster)
 library(rgeos)
@@ -91,14 +90,14 @@ pal = c("#ec524b","#fca652","#ffa5a5","#28abb9","#ADB36E","#a37eba","#47ADF3")
 ggplot() + geom_polygon(data = map, aes(x = long, y = lat, group = group),
                         fill = '#F8F3E4', color = '#735C4F',alpha=0.7)+
   geom_point(data=daram_bus,aes(x=X3,y=X4,col=X1),size=1.5)+
-  scale_color_discrete(name="´Ù¶÷Áã¹ö½º")+
+  scale_color_discrete(name="ë‹¤ëŒì¥ë²„ìŠ¤")+
   theme_classic()
 
 
 
-# 2020³â ¿ùº° ³ë¼± ÀÌ¿ë°´ ÇÃ¶ù=========================
-## ÄÚµå Áß°£ »ı·«
-## ÀÌ¶§ _totalÀº ¿ùº° ´Ù¶÷Áã¹ö½º ÀÌ¿ë°´ ÃÑÇÕÀ» Á¤¸®ÇÑ µ¥ÀÌÅÍÇÁ·¹ÀÓ
+# 2020ë…„ ì›”ë³„ ë…¸ì„  ì´ìš©ê° í”Œë=========================
+## ì½”ë“œ ì¤‘ê°„ ìƒëµ
+## ì´ë•Œ _totalì€ ì›”ë³„ ë‹¤ëŒì¥ë²„ìŠ¤ ì´ìš©ê° ì´í•©ì„ ì •ë¦¬í•œ ë°ì´í„°í”„ë ˆì„
 
 daramdaram=NULL
 daramdaram=merge(bus8221_total,bus8441_total)
@@ -115,9 +114,9 @@ daramdaram %>%
   ggplot(aes(x=MONTH, y=value,color=darambus))+
   geom_line(size=2, alpha=0.6)+
   geom_point(size=2.5)+
-  scale_x_discrete(limits=paste(1:10,"¿ù"))+
-  ggtitle("2020³â ´Ù¶÷Áã¹ö½º ÀÌ¿ëÀÎ¿ø(ÇÏÂ÷±âÁØ")+
-  xlab("2020³â 1¿ù~10¿ù")+
-  ylab("ÇÏÂ÷ÀÎ¿ø")+  
+  scale_x_discrete(limits=paste(1:10,"ì›”"))+
+  ggtitle("2020ë…„ ë‹¤ëŒì¥ë²„ìŠ¤ ì´ìš©ì¸ì›(í•˜ì°¨ê¸°ì¤€")+
+  xlab("2020ë…„ 1ì›”~10ì›”")+
+  ylab("í•˜ì°¨ì¸ì›")+  
   scale_color_manual(values=pal)+
   theme_classic ()
